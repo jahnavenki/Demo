@@ -23,7 +23,6 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Component(service = CardFundService.class, immediate = true)
 public class CardFundServiceImpl implements CardFundService {
 
@@ -41,68 +40,55 @@ public class CardFundServiceImpl implements CardFundService {
     @Override
     public CardFundFamily[] getCardFundFamilies() {
         Map<String, String> queryParameters = new HashMap<>();
-        queryParameters.put(fundPerformanceConfig.getCompanyCode());
-        queryParameters.put("mainGroup", CardFundAPIConstants.MAIN_GROUP);
-        queryParameters.put("category", "Conservative");
-        queryParameters.put("category", "Defensive");
-        queryParameters.put("category", "Geared");
-        queryParameters.put("category", "Growth");
-        queryParameters.put("category", "High Growth");
-        queryParameters.put("category", "Moderate");
-        queryParameters.put("category", "Single sector option");
-        queryParameters.put("asset", "");
-        queryParameters.put("asset", "Alternatives");
-        queryParameters.put("asset", "Australian Property Securities");
-        queryParameters.put("asset", "Australian Share");
-        queryParameters.put("asset", "Cash and other income");
-        queryParameters.put("asset", "Fixed Interest");
-        queryParameters.put("asset", "Global Property Securities");
-        queryParameters.put("asset", "Global Share");
-        queryParameters.put("asset", "Infrastructure securities");
-        queryParameters.put("asset", "Multi-Sector");
-        queryParameters.put("risk", "1");
-        queryParameters.put("risk", "3");
-        queryParameters.put("risk", "4");
-        queryParameters.put("risk", "5");
-        queryParameters.put("risk", "6");
-        queryParameters.put("risk", "7");
-        queryParameters.put("minTimeFrame", "At least 10 years");
-        queryParameters.put("minTimeFrame", "At Least 3 years");
-        queryParameters.put("minTimeFrame", "At least 5 years");
-        queryParameters.put("minTimeFrame", "At least 7 years");
-        queryParameters.put("minTimeFrame", "No minimum");
+        queryParameters.put("companyCode", fundPerformanceConfig.getCompanyCode());
+        queryParameters.put("mainGroup", fundPerformanceConfig.getMainGroup());
+        queryParameters.put("productId", fundPerformanceConfig.getProductId());
 
-        return getCarFundDetails(queryParameters);
+        addQueryParameters(queryParameters, "category", fundPerformanceConfig.getCategory());
+        addQueryParameters(queryParameters, "asset", fundPerformanceConfig.getAsset());
+        addQueryParameters(queryParameters, "risk", fundPerformanceConfig.getRisk());
+        addQueryParameters(queryParameters, "minTimeFrame", fundPerformanceConfig.getMintimeframe());
+
+        return getCardFundDetails(queryParameters);
     }
 
-    private CardFundFamily[] getCarFundDetails(Map<String, String> queryParameter) {
+    private void addQueryParameters(Map<String, String> queryParameters, String key, String[] values) {
+        if (values != null) {
+            for (String value : values) {
+                queryParameters.put(key, value);
+            }
+        }
+    }
+
+    private CardFundFamily[] getCardFundDetails(Map<String, String> queryParameter) {
         CardFundFamily[] cardFundFamily = new CardFundFamily[0];
-        String url = constructCarFundApiUrl(queryParameter);
+        String url = constructCardFundApiUrl(queryParameter);
 
         try {
             HttpRequest request = resourceOwnerTokenService.getHttpRequest().uri(new URI(url)).GET().build();
             HttpResponse<String> response = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofMillis(apiGatewayService.timeout())).build()
+                    .connectTimeout(Duration.ofMillis(fundPerformanceConfig.getTimeout())).build()
                     .send(request, HttpResponse.BodyHandlers.ofString());
             String responseJSONStr = response.body();
             if (response.statusCode() == 200) {
-                return parseCarFunds(responseJSONStr);
+                return parseCardFunds(responseJSONStr);
             }
         } catch (URISyntaxException | InterruptedException | IOException e) {
-            LOGGER.error("getCarFundDetails(): Exception occurred", e);
+            LOGGER.error("getCardFundDetails(): Exception occurred", e);
         }
         return cardFundFamily;
     }
 
-    private String constructCarFundApiUrl(Map<String, String> queryParameters) {
+    private String constructCardFundApiUrl(Map<String, String> queryParameters) {
         StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(CardFundAPIConstants.BASE_URL);
+        urlBuilder.append(fundPerformanceConfig.getBaseApiUrl());
 
         boolean isFirstParam = true;
         for (Map.Entry<String, String> entry : queryParameters.entrySet()) {
             if (!isFirstParam) {
                 urlBuilder.append("&");
             } else {
+                urlBuilder.append("?");
                 isFirstParam = false;
             }
             urlBuilder.append(entry.getKey()).append("=").append(entry.getValue());
@@ -111,12 +97,12 @@ public class CardFundServiceImpl implements CardFundService {
         return urlBuilder.toString();
     }
 
-    private CardFundFamily[] parseCarFunds(String responseJSONStr) {
+    private CardFundFamily[] parseCardFunds(String responseJSONStr) {
         Gson gson = new Gson();
         try {
             return gson.fromJson(responseJSONStr, CardFundFamily[].class);
         } catch (JsonSyntaxException e) {
-            LOGGER.error("parseCarFunds(): JSON syntax exception occurred", e);
+            LOGGER.error("parseCardFunds(): JSON syntax exception occurred", e);
         }
         return new CardFundFamily[0];
     }
