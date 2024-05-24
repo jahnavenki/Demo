@@ -10,13 +10,13 @@ public @interface FundPerformanceServiceConfig {
     String baseApiUrl() default "https://secure.colonialfirststate.com.au/fp/pricenperformance/products/funds/performance";
 
     @AttributeDefinition(name = "Company Code")
-    String[] companyCode() default {"001"};
+    String companyCode() default "001";
 
     @AttributeDefinition(name = "Main Group")
-    String[] mainGroup() default {"SF"};
+    String mainGroup() default "SF";
 
     @AttributeDefinition(name = "Product ID")
-    String[] productId() default {"11"};
+    String productId() default "11";
 
     @AttributeDefinition(name = "Category")
     String[] category() default {"Conservative", "Defensive", "Geared", "Growth", "High Growth", "Moderate", "Single sector option"};
@@ -32,7 +32,4 @@ public @interface FundPerformanceServiceConfig {
 
     @AttributeDefinition(name = "Timeout")
     int timeout() default 5000; // Default timeout of 5000 milliseconds (5 seconds)
-
-
 }
-
