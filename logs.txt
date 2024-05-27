@@ -232,4 +232,18 @@ public class CardFundDropDownServlet extends SlingSafeMethodsServlet {
     }
 }
 
+..............................................
+Cannot serve request to /bin/jsonDataDropdown in BundledScriptServlet (/libs/sling/servlet/errorhandler/404.jsp)
 
+Request Progress:
+      0 TIMER_START{Request Processing}
+      2 COMMENT timer_end format is {<elapsed microseconds>,<timer name>} <optional message>
+      8 LOG Method=GET, PathInfo=null
+     10 TIMER_START{handleSecurity}
+   1216 TIMER_END{1204,handleSecurity} authenticator org.apache.sling.auth.core.impl.SlingAuthenticator@f0b7fad returns true
+   1529 TIMER_START{ResourceResolution}
+   1695 TIMER_END{165,ResourceResolution} URI=/bin/jsonDataDropdown resolves to Resource=NonExistingResource, path=/bin/jsonDataDropdown
+   1702 LOG Resource Path Info: SlingRequestPathInfo: path='/bin/jsonDataDropdown', selectorString='null', extension='null', suffix='null'
+   1702 TIMER_START{ServletResolution}
+   1705 TIMER_START{resolveServlet(/bin/jsonDataDropdown)}
+   2407 LOG {0}: no servlet found
