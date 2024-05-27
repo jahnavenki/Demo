@@ -1,1 +1,55 @@
 27.05.2024 11:17:21.041 *INFO* [qtp135248589-903] au.com.cfs.winged.core.config.FundPerformanceConfigImpl Constructed URL: au.com.cfs.winged.core.config.FundPerformanceServiceConfig : {companyCode=001, productId=11, baseApiUrl=https://secure.colonialfirststate.com.au/fp/pricenperformance/products/funds/performance, annotationType=null, timeout=5000, mainGroup=SF, hashCode=0, equals=false, risk=[Ljava.lang.String;@45ebd, toString=null, category=[Ljava.lang.String;@2d9bab7a, asset=[Ljava.lang.String;@1db43d39, mintimeframe=[Ljava.lang.String;@63533e99}
+
+package au.com.cfs.winged.core.servlets;
+
+import au.com.cfs.winged.core.models.common.ResourceOwnerTokenService;
+import au.com.cfs.winged.core.services.CardFundService;
+import com.google.gson.Gson;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.HttpConstants;
+import org.apache.sling.api.servlets.ServletResolverConstants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.net.http.HttpResponse;
+
+@Component(
+    service = Servlet.class,
+    property = {
+        ServletResolverConstants.SLING_SERVLET_PATHS + "=/bin/get-card-fund",
+        ServletResolverConstants.SLING_SERVLET_METHODS + "=" + HttpConstants.METHOD_GET
+    }
+)
+public class GetCardFundServlet extends org.apache.sling.api.servlets.SlingAllMethodsServlet {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetCardFundServlet.class);
+
+    @Reference
+    private CardFundService cardFundService;
+
+    @Override
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        try {
+            // Get card fund families from the service
+            CardFundFamily[] cardFundFamilies = cardFundService.getCardFundFamilies();
+
+            // Convert card fund families to JSON string
+            Gson gson = new Gson();
+            String jsonResponse = gson.toJson(cardFundFamilies);
+
+            // Write JSON response to servlet response
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            LOGGER.error("Error while fetching card fund families", e);
+            response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"Internal Server Error\"}");
+        }
+    }
+}
