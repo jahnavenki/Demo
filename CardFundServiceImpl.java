@@ -63,15 +63,18 @@ public class CardFundServiceImpl implements CardFundService {
     private CardFundFamily[] getCardFundDetails(Map<String, String> queryParameter) {
         CardFundFamily[] cardFundFamily = new CardFundFamily[0];
         String url = constructCardFundApiUrl(queryParameter);
-
+        LOGGER.info("Constructed URL: {}", url); // Log the constructed URL
         try {
             HttpRequest request = resourceOwnerTokenService.getHttpRequest().uri(new URI(url)).GET().build();
             HttpResponse<String> response = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofMillis(fundPerformanceConfig.getTimeout())).build()
                     .send(request, HttpResponse.BodyHandlers.ofString());
             String responseJSONStr = response.body();
+            LOGGER.info("API Response: {}", responseJSONStr); // Log the API response
             if (response.statusCode() == 200) {
                 return parseCardFunds(responseJSONStr);
+            } else {
+                LOGGER.error("API request failed with response code: {}", response.statusCode());
             }
         } catch (URISyntaxException | InterruptedException | IOException e) {
             LOGGER.error("getCardFundDetails(): Exception occurred", e);
