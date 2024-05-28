@@ -1,95 +1,20 @@
-Resource at '/bin/jsonDataDropdown' not found: No resource found
-Cannot serve request to /bin/jsonDataDropdown in BundledScriptServlet (/libs/sling/servlet/errorhandler/404.jsp)
+(function ($, $document) {
+    "use strict";
 
-Request Progress:
-      0 TIMER_START{Request Processing}
-      2 COMMENT timer_end format is {<elapsed microseconds>,<timer name>} <optional message>
-     13 LOG Method=GET, PathInfo=null
-     15 TIMER_START{handleSecurity}
-   1987 TIMER_END{1968,handleSecurity} authenticator org.apache.sling.auth.core.impl.SlingAuthenticator@f0b7fad returns true
-   2440 TIMER_START{ResourceResolution}
-   2657 TIMER_END{215,ResourceResolution} URI=/bin/jsonDataDropdown resolves to Resource=NonExistingResource, path=/bin/jsonDataDropdown
-   2665 LOG Resource Path Info: SlingRequestPathInfo: path='/bin/jsonDataDropdown', selectorString='null', extension='null', suffix='null'
-   2665 TIMER_START{ServletResolution}
-   2669 TIMER_START{resolveServlet(/bin/jsonDataDropdown)}
-   3544 LOG {0}: no servlet found
-   3550 TIMER_END{879,resolveServlet(/bin/jsonDataDropdown)} Using servlet org.apache.sling.servlets.get.DefaultGetServlet
-   3553 TIMER_END{886,ServletResolution} URI=/bin/jsonDataDropdown handled by Servlet=org.apache.sling.servlets.get.DefaultGetServlet
-   3557 LOG Applying REQUESTfilters
-   3563 LOG Calling filter: com.adobe.granite.resourceresolverhelper.impl.ResourceResolverHelperImpl
-   3569 LOG Calling filter: org.apache.sling.security.impl.ContentDispositionFilter
-   3574 LOG Calling filter: com.adobe.granite.csrf.impl.CSRFFilter
-   3579 LOG Calling filter: org.apache.sling.i18n.impl.I18NFilter
-   3588 LOG Calling filter: com.adobe.granite.httpcache.impl.InnerCacheFilter
-   3597 LOG Calling filter: org.apache.sling.rewriter.impl.RewriterFilter
-   3601 LOG Calling filter: com.adobe.cq.history.impl.HistoryRequestFilter
-   3821 LOG Calling filter: com.day.cq.wcm.core.impl.WCMRequestFilter
-   3836 LOG Calling filter: com.adobe.cq.wcm.core.components.internal.servlets.CoreFormHandlingServlet
-   3841 LOG Calling filter: com.adobe.granite.optout.impl.OptOutFilter
-   3847 LOG Calling filter: com.day.cq.wcm.foundation.forms.impl.FormsHandlingServlet
-   3853 LOG Calling filter: com.day.cq.dam.core.impl.servlet.DisableLegacyServletFilter
-   3860 LOG Calling filter: org.apache.sling.engine.impl.debug.RequestProgressTrackerLogFilter
-   3864 LOG Calling filter: avanade.core.filters.LoggingFilter
-   3871 LOG Calling filter: com.day.cq.wcm.mobile.core.impl.redirect.RedirectFilter
-   3874 LOG Calling filter: com.day.cq.wcm.core.impl.AuthoringUIModeServiceImpl
-   3968 LOG Calling filter: com.adobe.granite.rest.assets.impl.AssetContentDispositionFilter
-   3975 LOG Calling filter: com.adobe.granite.requests.logging.impl.RequestLoggerImpl
-   3981 LOG Calling filter: com.adobe.granite.rest.impl.servlet.ApiResourceFilter
-   3988 LOG Calling filter: com.day.cq.dam.core.impl.servlet.ActivityRecordHandler
-   3999 LOG Calling filter: com.day.cq.wcm.core.impl.warp.TimeWarpFilter
-   4004 LOG Calling filter: com.day.cq.dam.core.impl.assetlinkshare.AdhocAssetShareAuthHandler
-   4011 LOG Applying Componentfilters
-   4014 LOG Calling filter: com.day.cq.personalization.impl.TargetComponentFilter
-   4016 LOG Calling filter: com.day.cq.wcm.core.impl.page.PageLockFilter
-   4020 LOG Calling filter: com.day.cq.wcm.core.impl.WCMComponentFilter
-   4042 LOG Calling filter: com.adobe.granite.metrics.knownerrors.impl.ErrorLoggingComponentFilter
-   4045 LOG Calling filter: com.adobe.cq.dam.cfm.ui.impl.EditorCacheFilter
-   4049 LOG Calling filter: com.day.cq.wcm.core.impl.WCMDebugFilter
-   4055 TIMER_START{org.apache.sling.servlets.get.DefaultGetServlet#0}
-   4310 TIMER_END{253,org.apache.sling.servlets.get.DefaultGetServlet#0}
-   4704 LOG Filter timing: filter=com.day.cq.wcm.core.impl.WCMDebugFilter, inner=288, total=327, outer=39
-   4712 LOG Filter timing: filter=com.adobe.cq.dam.cfm.ui.impl.EditorCacheFilter, inner=327, total=363, outer=36
-   4720 LOG Filter timing: filter=com.adobe.granite.metrics.knownerrors.impl.ErrorLoggingComponentFilter, inner=363, total=477, outer=114
-   4728 LOG Filter timing: filter=com.day.cq.wcm.core.impl.monitoring.PageComponentRequestFilter, inner=477, total=480, outer=3
-   4736 LOG Filter timing: filter=com.day.cq.wcm.core.impl.WCMComponentFilter, inner=480, total=566, outer=86
-   4743 LOG Filter timing: filter=com.day.cq.wcm.core.impl.page.PageLockFilter, inner=566, total=605, outer=39
-   5772 LOG Filter timing: filter=com.adobe.cq.dtm.reactor.impl.servlets.ClientLibraryFilter, inner=0, total=737, outer=737
-   5780 LOG Filter timing: filter=com.day.cq.dam.core.impl.assetlinkshare.AdhocAssetShareAuthHandler, inner=737, total=783, outer=46
-   5788 LOG Filter timing: filter=com.adobe.cq.dam.webdav.impl.io.DamWebdavRequestFilter, inner=783, total=786, outer=3
-   5795 LOG Filter timing: filter=com.day.cq.wcm.core.impl.warp.TimeWarpFilter, inner=786, total=828, outer=42
-   5803 LOG Filter timing: filter=com.day.cq.dam.core.impl.servlet.DamContentDispositionFilter, inner=828, total=830, outer=2
-   5812 LOG Filter timing: filter=com.day.cq.dam.core.impl.servlet.ActivityRecordHandler, inner=830, total=880, outer=50
-   5819 LOG Filter timing: filter=com.adobe.granite.rest.impl.servlet.ApiResourceFilter, inner=880, total=924, outer=44
-   5827 LOG Filter timing: filter=com.adobe.granite.requests.logging.impl.RequestLoggerImpl, inner=924, total=972, outer=48
-   5834 LOG Filter timing: filter=com.adobe.cq.projects.impl.servlet.ProjectContentDispositionFilter, inner=972, total=974, outer=2
-   5850 LOG Filter timing: filter=com.adobe.granite.rest.assets.impl.AssetContentDispositionFilter, inner=974, total=1026, outer=52
-   5858 LOG Filter timing: filter=com.adobe.acs.commons.wcm.impl.AcsCommonsConsoleAuthoringUIModeFilter, inner=1026, total=1028, outer=2
-   5866 LOG Filter timing: filter=com.day.cq.wcm.core.impl.AuthoringUIModeServiceImpl, inner=1028, total=1160, outer=132
-   5873 LOG Filter timing: filter=com.day.cq.wcm.mobile.core.impl.redirect.RedirectFilter, inner=1160, total=1208, outer=48
-   5882 LOG Filter timing: filter=avanade.core.filters.LoggingFilter, inner=1208, total=1255, outer=47
-   5889 LOG Filter timing: filter=org.apache.sling.engine.impl.debug.RequestProgressTrackerLogFilter, inner=1255, total=1302, outer=47
-   5896 LOG Filter timing: filter=org.apache.sling.distribution.servlet.DistributionAgentCreationFilter, inner=1302, total=1306, outer=4
-   5904 LOG Filter timing: filter=com.day.cq.dam.core.impl.servlet.DisableLegacyServletFilter, inner=1306, total=1373, outer=67
-   5911 LOG Filter timing: filter=com.adobe.cq.wcm.core.extensions.amp.internal.AmpModeForwardFilter, inner=1373, total=1397, outer=24
-   5919 LOG Filter timing: filter=com.adobe.cq.wcm.core.components.internal.servlets.TableOfContentsFilter, inner=1397, total=1399, outer=2
-   5927 LOG Filter timing: filter=com.day.cq.wcm.foundation.forms.impl.FormsHandlingServlet, inner=1399, total=1466, outer=67
-   5936 LOG Filter timing: filter=com.adobe.granite.optout.impl.OptOutFilter, inner=1466, total=1510, outer=44
-   5945 LOG Filter timing: filter=com.adobe.cq.wcm.core.components.internal.servlets.CoreFormHandlingServlet, inner=1510, total=1573, outer=63
-   5952 LOG Filter timing: filter=com.day.cq.wcm.core.impl.WCMRequestFilter, inner=1573, total=1629, outer=56
-   5959 LOG Filter timing: filter=com.adobe.cq.history.impl.HistoryRequestFilter, inner=1629, total=1886, outer=257
-   5967 LOG Filter timing: filter=org.apache.sling.rewriter.impl.RewriterFilter, inner=1886, total=1942, outer=56
-   5975 LOG Filter timing: filter=com.adobe.granite.httpcache.impl.InnerCacheFilter, inner=1942, total=1995, outer=53
-   5983 LOG Filter timing: filter=com.adobe.acs.commons.wcm.impl.AcsCommonsConsoleEditorFilter, inner=1995, total=2002, outer=7
-   5991 LOG Filter timing: filter=org.apache.sling.i18n.impl.I18NFilter, inner=2002, total=2045, outer=43
-   5998 LOG Filter timing: filter=com.adobe.granite.csrf.impl.CSRFFilter, inner=2045, total=2093, outer=48
-   6006 LOG Filter timing: filter=org.apache.sling.security.impl.ContentDispositionFilter, inner=2093, total=2142, outer=49
-   6046 LOG Applying Error filters
-   6114 LOG Calling filter: org.apache.sling.i18n.impl.I18NFilter
-   6117 LOG Calling filter: org.apache.sling.rewriter.impl.RewriterFilter
-   6129 TIMER_START{handleError:status=404}
-   6155 TIMER_END{25,handleError:status=404} Using handler BundledScriptServlet (/libs/sling/servlet/errorhandler/404.jsp)
-   6268 LOG Adding bindings took 39 microseconds
-   7562 LOG Found processor for post processing ProcessorConfiguration: {contentTypes=[text/html], order=-1, active=true, valid=true, processErrorResponse=true, pipeline=(generator=Config(type=htmlparser, config={}), transformers=(Config(type=linkchecker, config={}), Config(type=mobile, config=JcrPropertyMap [node=Node[NodeDelegate{tree=/libs/cq/config/rewriter/default/transformer-mobile: { jcr:primaryType = nt:unstructured, component-optional = true}}], values={jcr:primaryType=nt:unstructured, component-optional=true}]), Config(type=mobiledebug, config=JcrPropertyMap [node=Node[NodeDelegate{tree=/libs/cq/config/rewriter/default/transformer-mobiledebug: { jcr:primaryType = nt:unstructured, component-optional = true}}], values={jcr:primaryType=nt:unstructured, component-optional=true}]), Config(type=contentsync, config=JcrPropertyMap [node=Node[NodeDelegate{tree=/libs/cq/config/rewriter/default/transformer-contentsync: { jcr:primaryType = nt:unstructured, component-optional = true}}], values={jcr:primaryType=nt:unstructured, component-optional=true}]), serializer=Config(type=htmlwriter, config={}))}
-   8121 TIMER_END{8120,Request Processing} Dumping SlingRequestProgressTracker Entries
+    $document.on("dialog-ready", function () {
+        if (Granite.author.DialogFrame.currentDialog.editable.config.dialog != "/apps/cfs-winged/components/content/dynamicfundperformance/cq:dialog") {
+            return;
+        }
+        filterDamPath('/content/dam/cfs-winged/images/pictograms');
+    });    
+        /** @param {string} path */
+	function filterDamPath( path ) {
+		$( '#SidePanel' )
+		.addClass( 'sidepanel-opened' )
+		.removeClass( 'sidepanel-closed' );
 
-http://localhost:4502/bin/jsonDataDropdown
+		$( '.coral-Form-field.assetfilter[name="assetfilter_image_path"]' )
+		.val( path )
+		.trigger( $.Event( 'keyup', { which: 13 } ) );	
+	}
+})($, $(document));
