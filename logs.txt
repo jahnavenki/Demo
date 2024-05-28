@@ -2,19 +2,21 @@
     "use strict";
 
     $document.on("dialog-ready", function () {
-        if (Granite.author.DialogFrame.currentDialog.editable.config.dialog != "/apps/cfs-winged/components/content/dynamicfundperformance/cq:dialog") {
+        var currentDialog = Granite.author.DialogFrame.currentDialog;
+        if (!currentDialog || currentDialog.editable.config.dialog !== "/apps/cfs-winged/components/content/dynamicfundperformance/cq:dialog") {
             return;
         }
         filterDamPath('/content/dam/cfs-winged/images/pictograms');
     });    
-        /** @param {string} path */
-	function filterDamPath( path ) {
-		$( '#SidePanel' )
-		.addClass( 'sidepanel-opened' )
-		.removeClass( 'sidepanel-closed' );
 
-		$( '.coral-Form-field.assetfilter[name="assetfilter_image_path"]' )
-		.val( path )
-		.trigger( $.Event( 'keyup', { which: 13 } ) );	
-	}
-})($, $(document));
+    /** @param {string} path */
+    function filterDamPath(path) {
+        $('#SidePanel')
+            .addClass('sidepanel-opened')
+            .removeClass('sidepanel-closed');
+
+        $('.coral-Form-field.assetfilter[name="assetfilter_image_path"]')
+            .val(path)
+            .trigger($.Event('keyup', { which: 13 }));
+    }
+})(jQuery, jQuery(document));
