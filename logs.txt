@@ -1,3 +1,94 @@
+<sly data-sly-use.templates="core/wcm/components/commons/v1/templates.html"></sly>
+<sly data-sly-use.fundPerformanceModel="au.com.cfs.winged.core.models.FundPerformanceModel"></sly>
+<div
+    data-sly-test="${fundPerformanceModel.apir}"
+    data-cmp-is="cardPromo"
+    class="
+      CardPromo CardPromo--layout-${fundPerformanceModel.layout ? fundPerformanceModel.layout : 'vertical'}
+      ${fundPerformanceModel.cardSize == 'large'  ? 'CardPromo--cardType-fund CardPromo--paddingSize-large ' : ''}
+      ${fundPerformanceModel.cardSize == 'small'  ? 'CardPromo--cardType-fund CardPromo--paddingSize-small' : ''} ${fundPerformanceModel.imageUrl ? '' : 'CardPromo--minHeightNoImg'}
+    "
+  >
+ <div class="CardPromo__Container ${fundPerformanceModel.horizontalLine && 'horizondalLine'} ${fundPerformanceModel.verticalLine && 'verticalLine'}">
+       <div class="CardPromo__Image" data-sly-test="${fundPerformanceModel.imageUrl}">
+        <img alt="" src="${fundPerformanceModel.imageUrl @context='html'}"/>
+		</div>
+        <div class="CardPromo__Content">
+        <h3 class="CardPromo__Heading" data-sly-test="${fundPerformanceModel.apir}">
+         
+            ${fundPerformanceModel.apir @ context='unsafe'}
+        </h3>
+        </div>
+  </div>
+<sly data-sly-call="${templates.placeholder @ isEmpty = !fundPerformanceModel.apir, classAppend = ''}"></sly>
+.......................................................................
+/*
+		Author Venkat
+*/
+package au.com.cfs.winged.core.models;
+
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+
+import javax.inject.Inject;
+
+@Model(
+adaptables = SlingHttpServletRequest.class,
+adapters = FundPerformanceModel.class,
+defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
+)
+public class FundPerformanceModel {
+
+	@ValueMapValue
+	private String layout;
+
+	@ValueMapValue
+	private String cardSize;
+
+	@ValueMapValue
+	private String apir;
+
+	@ValueMapValue
+	private String imageUrl;
+
+	@ValueMapValue
+	private String horizontalLine;
+
+	@ValueMapValue
+	private String verticalLine;
+
+	@Inject
+	private ResourceResolver resourceResolver;
+
+	public String getLayout() {
+		return layout;
+	}
+
+	public String getCardSize() {
+		return cardSize;
+	}
+
+	public String getApir() {
+		return apir;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public String getHorizontalLine() {
+		return horizontalLine;
+	}
+
+	public String getVerticalLine() {
+		return verticalLine;
+	}
+
+}
+...................................................................
 (function ($, $document) {
     "use strict";
 
@@ -20,3 +111,83 @@
             .trigger($.Event('keyup', { which: 13 }));
     }
 })(jQuery, jQuery(document));
+.........................................
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Performance data"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+        includes="[cfs.fundcard.dialog]">
+        <items jcr:primaryType="nt:unstructured">
+            <column
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/container">
+                <items jcr:primaryType="nt:unstructured">
+                    <layout
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                        fieldLabel="Layout"
+                        name="./layout">
+                        <items jcr:primaryType="nt:unstructured">
+                            <vertical
+                                jcr:primaryType="nt:unstructured"
+                                text="Vertical"
+                                value="vertical"/>
+                            <horizontal
+                                jcr:primaryType="nt:unstructured"
+                                text="Horizontal"
+                                value="horizontal"/>
+                        </items>
+                    </layout>
+                    <size
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                        fieldLabel="Size"
+                        name="./cardSize">
+                        <items jcr:primaryType="nt:unstructured">
+                            <default
+                                jcr:primaryType="nt:unstructured"
+                                text="Large"
+                                value="large"/>
+                            <small
+                                jcr:primaryType="nt:unstructured"
+                                text="Small"
+                                value="small"/>
+                        </items>
+                    </size>
+                    <apir
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldDescription="Author the unique APiR Code to get the net performance figures"
+                        fieldLabel="APiR Code"
+                        name="./apir"
+                        required="{Boolean}true"/>
+                    <imageUrl
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                        fieldDescription="Add a Image from the DAM section for the card"
+                        fieldLabel="Image Path (from DAM)"
+                        name="./imageUrl"
+                        rootPath="/content/dam"/>
+                    <horizontalLine
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/foundation/form/checkbox"
+                        fieldDescription="Add a checkbox"
+                        name="./horizontalLine"
+                        text="Horizontal Line"
+                        value="{Boolean}true"/>
+                    <verticalLine
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/foundation/form/checkbox"
+                        fieldDescription="Add a checkbox"
+                        name="./verticalLine"
+                        text="Vertical Line"
+                        value="{Boolean}true"/>
+                </items>
+            </column>
+        </items>
+    </content>
+</jcr:root>
